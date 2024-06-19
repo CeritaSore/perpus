@@ -258,7 +258,7 @@
         </div>
     </div>
 
-    <section class="section courses" id="courses" style="margin-bottom: 5rem">
+    <section class="section courses" id="courses">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -292,8 +292,8 @@
         </div>
     </section>
 
-    {{-- <div class="team section" id="team">
-        <div class="container">
+    <div class="team section" id="team">
+        {{-- <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="team-member">
@@ -352,6 +352,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div> --}}
+        </div> --}}
+    </div>
 @endsection

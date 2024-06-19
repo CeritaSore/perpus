@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Auth;
 //     return view('/component.index');
 // });
 
-Route::get('/', [FrontendController::class, 'index']);
+Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/book', [DashboardController::class, 'books']);
 Route::post('/book', [DashboardController::class, 'inputBooks'])->name('inputBooks');
 Route::put('/book/{id}', [DashboardController::class, 'editBooks'])->name('editBooks');

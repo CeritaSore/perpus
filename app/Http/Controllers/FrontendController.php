@@ -11,12 +11,12 @@ class FrontendController extends Controller
     //
     public function index()
     {
+        $buku = Books::all();
         if (Auth::check()) {
             $user = Auth::user();
-            $buku = Books::all();
             return view('component.frontend.index', compact('user', 'buku'));
         } else {
-            return view('component.frontend.index');
+            return view('component.frontend.index', compact('buku'));
         }
     }
 }
