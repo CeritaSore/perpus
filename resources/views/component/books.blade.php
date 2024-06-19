@@ -14,7 +14,7 @@
     @foreach ($list[0] as $books)
         <div class="col-lg-4">
             <div class="card" style="width: 18rem;">
-                <img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=1506&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                <img src="storage/{{$books->foto}}"
                     class="card-img-top" alt="...">
                 <div class="card-body text-center">
                     <h4 class="card-title" style="font-weight: bold;">{{ $books->judul_buku }}</h4>
@@ -47,12 +47,12 @@
                                 <div class="form-group">
                                     <label for="exampleInputtext">Judul Buku</label>
                                     <input type="text" name="book" class="form-control" id="exampleInputEmail1"
-                                        placeholder="masukan data">
+                                        placeholder="masukan data" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Pengarang</label>
                                     <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
-                                        style="width: 100%;" name="pengarang">
+                                        style="width: 100%;" name="pengarang" required>
                                         @foreach ($list[2] as $data)
                                             <option value="{{ $data->idpengarang }}">{{ $data->nama_pengarang }}</option>
                                         @endforeach
@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label>Penerbit</label>
                                     <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
-                                        style="width: 100%;" name="penerbit">
+                                        style="width: 100%;" name="penerbit" required>
                                         @foreach ($list[1] as $data)
                                             <option value="{{ $data->idpenerbit }}">{{ $data->nama_penerbit }}</option>
                                         @endforeach
@@ -72,7 +72,7 @@
                                 <div class="form-group">
                                     <label>kategori</label>
                                     <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
-                                        style="width: 100%;" name="kategori">
+                                        style="width: 100%;" name="kategori" required>
                                         @foreach ($list[3] as $data)
                                             <option value="{{ $data->idkategori }}">{{ $data->kategori }}</option>
                                         @endforeach
@@ -93,7 +93,7 @@
                                 <div class="form-group">
                                     <label>Tahun terbit</label>
                                     <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
-                                        style="width: 100%;" name="terbitan">
+                                        style="width: 100%;" name="terbitan" required>
                                         @php
                                             $year = 2024;
                                         @endphp

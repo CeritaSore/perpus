@@ -54,14 +54,16 @@ class DashboardController extends Controller
             'penerbit' => 'required',
             'kategori' => 'required',
             'terbitan' => 'required',
-
+            'photos' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+        $path = $request->file('photos')->store('images', 'public');
         Books::create([
             'judul_buku' => $data['book'],
             'pengarang_id' => $data['pengarang'],
             'penerbit_id' => $data['penerbit'],
             'kategori_id' => $data['kategori'],
             'tahun_terbit' => $data['terbitan'],
+            'foto' => $path,
         ]);
         return redirect('/book')->with('success', 'data berhasil ditambahkan');
     }
