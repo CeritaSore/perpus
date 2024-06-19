@@ -13,7 +13,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/" class="nav-link">Home</a>
+                    <a href="/dashboard" class="nav-link">Home</a>
                 </li>
 
             </ul>
@@ -62,7 +62,10 @@
                         <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block text-decoration-none">{{ $user->name }}</a>
+                        <a href="#" class="d-block text-decoration-none">
+                            @unless (Request::is('/error'))
+                                {{ $user->name }}</a>
+                        @endunless
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -70,9 +73,9 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                                                                               with font-awesome or any other icon font library -->
+                                                                                                   with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="/" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
+                            <a href="/dashboard" class="nav-link {{ Request::is('/dashboard') ? 'active' : '' }}">
 
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -127,16 +130,18 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/user" class="nav-link {{ Request::is('user') ? 'active' : '' }}">
+                        @if (in_array($user->role, ['Administrator','Staff']))
+                            <li class="nav-item">
+                                <a href="/user" class="nav-link {{ Request::is('user') ? 'active' : '' }}">
 
-                                <i class="nav-icon bi bi-people"></i>
-                                <p>
-                                    Daftar pengguna
+                                    <i class="nav-icon bi bi-people"></i>
+                                    <p>
+                                        Daftar pengguna
 
-                                </p>
-                            </a>
-                        </li>
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <form action="/logout" method="post">
                                 @csrf
@@ -164,39 +169,50 @@
                             @elseif(Request::is('book'))
                                 <h2>Buku</h2>
                                 <p>cari buku kesukaanmu</p>
-                                <button type="button" class="btn btn-primary " data-toggle="modal"
-                                    data-target="#modal-lg">
-                                    New
-                                </button>
+                                @if ($user->role !== 'Administrator')
+                                @else
+                                    <button type="button" class="btn btn-primary " data-toggle="modal"
+                                        data-target="#modal-lg">
+                                        New
+                                    </button>
+                                @endif
                             @elseif(Request::is('author'))
                                 <h2>Author</h2>
                                 <p>mereka ini salah satu orang yang menulis buku kamu baca lohh!!</p>
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary " data-toggle="modal"
-                                    data-target="#modal-default">
-                                    New
-                                </button>
+                                @if ($user->role === 'Administrator')
+                                    <button type="button" class="btn btn-primary " data-toggle="modal"
+                                        data-target="#modal-default">
+                                        New
+                                    </button>
+                                @endif
                             @elseif(Request::is('publisher'))
                                 <h2>Penerbit </h2>
                                 <p>Kamu mau lihat siapa penerbit dari buku yang kamu suka? sini! </p>
-                                <button type="button" class="btn btn-primary " data-toggle="modal"
-                                    data-target="#modal-default">
-                                    New
-                                </button>
+                                @if ($user->role === 'Administrator')
+                                    <button type="button" class="btn btn-primary " data-toggle="modal"
+                                        data-target="#modal-default">
+                                        New
+                                    </button>
+                                @endif
                             @elseif(Request::is('categories'))
                                 <h2>Kategori </h2>
                                 <p>Ada banyak Kategori buku sesuai dengan yang kamu ingin cari! </p>
-                                <button type="button" class="btn btn-primary " data-toggle="modal"
-                                    data-target="#modal-default">
-                                    New
-                                </button>
+                                @if ($user->role === 'Administrator')
+                                    <button type="button" class="btn btn-primary " data-toggle="modal"
+                                        data-target="#modal-default">
+                                        New
+                                    </button>
+                                @endif
                             @elseif(Request::is('statusBorrow'))
                                 <h2>Status Peminjaman </h2>
                                 <p>Cek berkala status Peminjaman yang kamu buat </p>
-                                <button type="button" class="btn btn-primary " data-toggle="modal"
-                                    data-target="#modal-default">
-                                    New
-                                </button>
+                                @if ($user->role === 'Administrator')
+                                    <button type="button" class="btn btn-primary " data-toggle="modal"
+                                        data-target="#modal-default">
+                                        New
+                                    </button>
+                                @endif
                             @elseif(Request::is('user'))
                                 <h2>Daftar user</h2>
                                 <p>Hanya admin yang dapat masuk</p>
@@ -226,6 +242,7 @@
                         @yield('borrow')
                         @yield('status')
                         @yield('user')
+                        @yield('error')
                         <!-- ./col -->
                     </div>
                     <!-- /.row -->

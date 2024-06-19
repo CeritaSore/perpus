@@ -14,9 +14,23 @@
     @foreach ($list[0] as $books)
         <div class="col-lg-4">
             <div class="card" style="width: 18rem;">
-                <img src="storage/{{$books->foto}}"
-                    class="card-img-top" alt="...">
                 <div class="card-body text-center">
+
+                    <img src="storage/{{ $books->foto }}" class="card-img-top" alt="...">
+                    @if ($books->status === 'sedang dipinjam')
+                        <div class="ribbon-wrapper">
+                            <div class="ribbon bg-danger">
+                                sedang dipinjam
+                            </div>
+                        </div>
+                    @else
+                        <div class="ribbon-wrapper">
+                            <div class="ribbon bg-success">
+                                Tersedia
+                            </div>
+                        </div>
+                    @endif
+
                     <h4 class="card-title" style="font-weight: bold;">{{ $books->judul_buku }}</h4>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
@@ -95,9 +109,9 @@
                                     <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
                                         style="width: 100%;" name="terbitan" required>
                                         @php
-                                            $year = 2024;
+                                            $year = 1969;
                                         @endphp
-                                        @for ($i = 1969; $i <= $year; $i++)
+                                        @for ($i = 2024; $i >= $year; $i--)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
 
@@ -141,7 +155,8 @@
 
                             <h3 class="profile-username text-center">{{ $books->judul_buku }}</h3>
                             <p class="text-center">dikarang oleh : {{ $books->pengarang->nama_pengarang }} <br>diterbitkan
-                                oleh : {{ $books->penerbit->nama_penerbit }} <br>tahun terbit : {{ $books->tahun_terbit }} <br> Status buku : {{$books->status}}
+                                oleh : {{ $books->penerbit->nama_penerbit }} <br>tahun terbit : {{ $books->tahun_terbit }}
+                                <br> Status buku : {{ $books->status }}
                             </p>
 
 
@@ -154,18 +169,22 @@
 
                     <div class="card-footer" style="display: flex;justify-content:space-around;">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-warning" data-toggle="modal"
-                            data-target="#modal-lg{{ $books->idbuku }}">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                            data-target="#modal-lg-delete{{ $books->idbuku }}">
-                            <i class="bi bi-trash3-fill"></i>
-                        </button>
+                        @if (in_array($user->role, ['Member','Staff']))
+                            <a href="{{ route('books.borrow', ['idbuku' => $books->idbuku, 'judul' => $books->judul_buku]) }}"
+                                class="btn btn-{{ $books->status === 'sedang dipinjam' ? 'danger disabled' : 'success' }}"><i
+                                    class="bi bi-ticket-fill"></i></a>
+                        @elseif(in_array($user->role, ['Staff', 'Administrator']))
+                            <button type="button" class="btn btn-warning" data-toggle="modal"
+                                data-target="#modal-lg{{ $books->idbuku }}">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#modal-lg-delete{{ $books->idbuku }}">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        @endif
 
-                        <a href="{{ route('books.borrow', ['idbuku' => $books->idbuku, 'judul' => $books->judul_buku]) }}"
-                            class="btn btn-{{ $books->status === 'sedang dipinjam' ? 'danger disabled' : 'success' }}"><i
-                                class="bi bi-ticket-fill"></i></a>
+
 
                     </div>
                 </div>

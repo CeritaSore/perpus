@@ -318,19 +318,19 @@ class DashboardController extends Controller
     }
     public function changeInput(Request $request, $id)
     {
-        dd($request);
+        // dd($request);
         $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email:rfc,dns',
-            'role' => 'required|in:Member,Administrator,Staff',
+            "name" => "required",
+            "role" => "required|in:Member,Administrator,Staff",
+            "status" => "required|in:Active,Not Active,Banned"
         ]);
         $password = Str::random(8);
-        User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'role' => $data['role'],
-            'password' => bcrypt($password),
-        ]);
+        $update = user::find($id);
+        $update->name = $data['name'];
+        $update->role = $data['role'];
+        $update->status = $data['status'];
+        $update->password = $password;
+        $update->save();
         return redirect('user')->with('success', 'data berhasil ditambahkan');
     }
     public function deleteInput(Request $request, $id)
@@ -339,5 +339,12 @@ class DashboardController extends Controller
         $delete = User::find($id);
         $delete->delete();
         return redirect('user');
+    }
+    public function error()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            return view('component.Error', compact('user'));
+        }
     }
 }

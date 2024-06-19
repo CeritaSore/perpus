@@ -31,7 +31,7 @@
                             <li class="scroll-to-section"><a href="#courses" class="">Books</a></li>
                             <li class="scroll-to-section"><a href="#team">Team</a></li>
                             @if (Auth::check())
-                                <li class="scroll-to-section"><a href="/">{{ $user->name }}</a></li>
+                                <li class="scroll-to-section"><a href="/dashboard">{{ $user->name }}</a></li>
                             @else
                                 <li class="scroll-to-section"><a href="/login">Login!</a></li>
                             @endif
@@ -258,7 +258,7 @@
         </div>
     </div>
 
-    <section class="section courses" id="courses">
+    <section class="section courses" id="courses" style="margin-bottom: 5rem">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -268,34 +268,13 @@
                     </div>
                 </div>
             </div>
-            <ul class="event_filter">
-                <li>
-                    <a class="is_active" href="#!" data-filter="*">Show All</a>
-                </li>
-                @foreach ($buku as $data)
-                    <li>
-                        <a class="is_active" href="#!"
-                            data-filter="{{ $data->kategori->kategori }}">{{ $data->kategori->kategori }}</a>
-                    </li>
-                @endforeach
-
-                {{--   <li>
-                    <a href="#!" data-filter=".design">Webdesign</a>
-                </li>
-                 <li>
-                    <a href="#!" data-filter=".development">Development</a>
-                </li>
-                <li>
-                    <a href="#!" data-filter=".wordpress">Wordpress</a>
-                </li> --}}
-            </ul>
             <div class="row event_box" style="position: relative; height: 789.634px;">
                 @foreach ($buku as $data)
                     <div class="col-lg-4 col-md-6 align-self-center mb-30 event_outer col-md-6 {{ $data->kategori }}"
                         style="position: absolute; left: 0px; top: 0px;">
                         <div class="events_item">
                             <div class="thumb">
-                                <a href="#"><img src="{{ $data->foto }}" alt=""></a>
+                                <a href="/book"><img src="storage/{{ $data->foto }}" alt=""></a>
                                 <span class="category">{{ $data->kategori->kategori }}</span>
                                 {{-- <span class="price">
                                 <h6><em>$</em>160</h6>
@@ -313,7 +292,7 @@
         </div>
     </section>
 
-    <div class="team section" id="team">
+    {{-- <div class="team section" id="team">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
@@ -374,5 +353,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection

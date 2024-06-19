@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PengarangController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
+use GuzzleHttp\Middleware;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\Auth;
 //     return view('/component.index');
 // });
 
-Route::get('/home', [FrontendController::class, 'index']);
+Route::get('/', [FrontendController::class, 'index']);
 Route::get('/book', [DashboardController::class, 'books']);
 Route::post('/book', [DashboardController::class, 'inputBooks'])->name('inputBooks');
 Route::put('/book/{id}', [DashboardController::class, 'editBooks'])->name('editBooks');
@@ -61,13 +62,15 @@ Route::get('/statusBorrow', [DashboardController::class, 'statusIndex']);
 Route::put('/statusBorrow{id}', [DashboardController::class, 'changeStatus'])->name('borrow.change');
 Route::delete('/statusBorrow/{id}', [DashboardController::class, 'deleteStatus'])->name('borrow.delete');
 
-Route::get('/user', [DashboardController::class, 'user']);
-Route::post('/user', [DashboardController::class, 'userInput'])->name('user.input');
-Route::put('/user/{id}', [DashboardController::class, 'changeInput'])->name('user.change');
-Route::delete('/user/{id}', [DashboardController::class, 'deleteInput'])->name('user.delete');
+Route::middleware(['CheckRole:Staff,Administrator'])->group(function () {
+    Route::get('/user', [DashboardController::class, 'user']);
+    Route::post('/user', [DashboardController::class, 'userInput'])->name('user.input');
+    Route::put('/user/{id}', [DashboardController::class, 'changeInput'])->name('user.change');
+    Route::delete('/user/{id}', [DashboardController::class, 'deleteInput'])->name('user.delete');
+});
 
-
-Route::get('/', [DashboardController::class, 'index']);
+Route::get('/error', [DashboardController::class, 'error'])->name('error');
+Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'register']);

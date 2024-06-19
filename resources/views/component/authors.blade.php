@@ -70,7 +70,7 @@
                     <div class="modal-body">
                         <div class="text-center">
                             <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg"
-                            alt="User profile picture">
+                                alt="User profile picture">
                         </div>
                         <h4 class="text-center">{{ $author->nama_pengarang }}</h4>
 
@@ -80,14 +80,16 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" 
-                            data-target="#modal-default-update{{ $author->idpengarang }}">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                            data-target="#modal-default-delete{{ $author->idpengarang }}">
-                            <i class="bi bi-trash3-fill"></i>
-                        </button>
+                        @if (in_array($user->role, ['Administrator', 'Staff']))
+                            <button type="button" class="btn btn-warning" data-toggle="modal"
+                                data-target="#modal-default-update{{ $author->idpengarang }}">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#modal-default-delete{{ $author->idpengarang }}">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        @endif
                         <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>

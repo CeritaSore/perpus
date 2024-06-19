@@ -48,16 +48,18 @@
                                         data-target="#modal-default-view{{ $data->idpeminjaman }}">
                                         <i class="bi bi-eye"></i>
                                     </button>
-                                    <button type="button" class="btn btn-warning " data-toggle="modal"
-                                        data-target="#modal-default-edit{{ $data->idpeminjaman }}">
+                                    @if (in_array($user->role, ['Administrator', 'Staff']))
+                                        <button type="button" class="btn btn-warning " data-toggle="modal"
+                                            data-target="#modal-default-edit{{ $data->idpeminjaman }}">
 
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger " data-toggle="modal"
-                                        data-target="#modal-default-delete{{ $data->idpeminjaman }}">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger " data-toggle="modal"
+                                            data-target="#modal-default-delete{{ $data->idpeminjaman }}">
 
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

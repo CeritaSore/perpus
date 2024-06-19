@@ -80,14 +80,16 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-warning" data-toggle="modal"
-                            data-target="#modal-default-update{{ $publisher->idpenerbit }}">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                            data-target="#modal-default-delete{{ $publisher->idpenerbit }}">
-                            <i class="bi bi-trash3-fill"></i>
-                        </button>
+                        @if (in_array($user->role, ['Administrator', 'Staff']))
+                            <button type="button" class="btn btn-warning" data-toggle="modal"
+                                data-target="#modal-default-update{{ $publisher->idpenerbit }}">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#modal-default-delete{{ $publisher->idpenerbit }}">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        @endif
                         <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
