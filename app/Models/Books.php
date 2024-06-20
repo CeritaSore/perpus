@@ -24,11 +24,11 @@ class Books extends Model
     ];
     public function pengarang()
     {
-        return $this->belongsTo(pengarang::class, 'pengarang_id', 'idpengarang');
+        return $this->belongsTo(Pengarang::class, 'pengarang_id', 'idpengarang');
     }
     public function penerbit()
     {
-        return $this->belongsTo(penerbit::class, 'penerbit_id', 'idpenerbit');
+        return $this->belongsTo(Penerbit::class, 'penerbit_id', 'idpenerbit');
     }
     public function kategori()
     {
