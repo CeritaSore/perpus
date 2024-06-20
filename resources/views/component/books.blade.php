@@ -149,7 +149,7 @@
                     <div class="modal-body">
                         <div class=" box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg"
+                                <img class="profile-user-img img-fluid img-circle" src="storage/{{$books->foto}}"
                                     alt="User profile picture">
                             </div>
 

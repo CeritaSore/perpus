@@ -54,7 +54,7 @@ class DashboardController extends Controller
             'penerbit' => 'required',
             'kategori' => 'required',
             'terbitan' => 'required',
-            'photos' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $path = $request->file('photos')->store('images', 'public');
         Books::create([
@@ -76,9 +76,21 @@ class DashboardController extends Controller
             'penerbit' => 'required',
             'kategori' => 'required',
             'terbitan' => 'required',
-
+            'photos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $update = Books::find($idbuku);
+        if ($request->hasFile('photos')) {
+            // Hapus foto lama jika ada
+            if ($update->foto) {
+                Storage::disk('public')->delete($update->foto);
+            }
+
+            // Simpan foto baru
+            $path = $request->file('photos')->store('images', 'public');
+
+            // Update path foto di database
+            $update->foto = $path;
+        }
         $update->judul_buku = $data['book'];
         $update->pengarang_id = $data['pengarang'];
         $update->penerbit_id = $data['penerbit'];
