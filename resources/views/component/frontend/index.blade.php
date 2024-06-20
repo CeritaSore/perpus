@@ -30,7 +30,7 @@
                             <li class="scroll-to-section"><a href="#services" class="">Services</a></li>
                             <li class="scroll-to-section"><a href="#courses" class="">Books</a></li>
                             <li class="scroll-to-section"><a href="#team">Team</a></li>
-                            @if (Auth::check())
+                            @if (Auth::check() && Auth::user()->status !== 'Not Active')
                                 <li class="scroll-to-section"><a href="/dashboard">{{ $user->name }}</a></li>
                             @else
                                 <li class="scroll-to-section"><a href="/login">Login!</a></li>

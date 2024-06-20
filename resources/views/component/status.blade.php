@@ -40,7 +40,11 @@
                             @endphp
                             <tr>
                                 <td>{{ $data->idpeminjaman }}</td>
-                                <td>{{ $data->user->name }}</td>
+                                @if (Auth::user()->role === 'Member')
+                                    <td>{{ Auth::user()->id == $data->user->id ? $data->user->name : '' }}</td>
+                                @else
+                                    <td>{{ $data->user->name }}</td>
+                                @endif
                                 <td>{{ $data->books->judul_buku }}</td>
                                 <td>{{ $data->status }}</td>
                                 <td>

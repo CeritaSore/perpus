@@ -249,8 +249,13 @@ class DashboardController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $list = Borrow::all();
-            return view('component.status', compact('user', 'list'));
+            if (Auth::user()->role === 'Member') {
+                $list = Borrow::where('user_id', Auth::user()->id)->get();
+                return view('component.status', compact('user', 'list'));
+            } else {
+                $list = Borrow::all();
+                return view('component.status', compact('user', 'list'));
+            }
         }
     }
     public function changeStatus(Request $request, $idpeminjaman)

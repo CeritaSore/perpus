@@ -16,8 +16,10 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials) && Auth::user()->status === "Active") {
             return redirect()->intended('/');
+        } else {
+            return redirect()->back()->with('error', 'Akun masih tertangguhkan oleh admin.');
         }
 
         return redirect()->back()->with('error', 'Invalid credentials');
